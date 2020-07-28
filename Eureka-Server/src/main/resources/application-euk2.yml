@@ -1,0 +1,10 @@
+# 设置服务注册中心的URL，用于client和server端交流
+eureka:
+  client:
+    service-url:
+      defaultZone: http://euk1.com:7001/eureka/
+  instance:
+    hostname: euk2.com
+
+server:
+  port: 7002

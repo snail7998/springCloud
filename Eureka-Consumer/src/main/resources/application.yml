@@ -1,0 +1,15 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://euk1.com:7001/eureka/
+  instance:
+    prefer-ip-address: true # 使用ip地址注册
+    instance-id: Eureka-consumer # 指定服务的id
+
+server:
+  port: 91
+
+spring:
+  application:
+    name: consumer
+
