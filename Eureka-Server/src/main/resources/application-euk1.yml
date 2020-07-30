@@ -1,11 +1,13 @@
-# 设置服务注册中心的URL，用于client和server端交流
+# 设置服务注册中心的URL，用于client和server端交流，7001指Eureka服务端口
 eureka:
   client:
     service-url:
       defaultZone: http://euk2.com:7001/eureka/
-  #主机名，必填
+  #主机名，本机模拟集群，因需要不同的ip，所以使用host文件配置euk1.com euk2.com 区分
+  #实际使用指定集群内的ip地址即可，注意每个节点不一致
   instance:
     hostname: euk1.com
 
+# Tomcat的端口
 server:
   port: 7001

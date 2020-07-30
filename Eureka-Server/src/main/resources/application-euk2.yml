@@ -3,6 +3,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://euk1.com:7001/eureka/
+  # hostname 是用来查找主机地址的，需保证不一样，如果是单机或者两个服务ip地址一样，则需配置不同主机名
+  # appname表示分组，同applicationName
   instance:
     hostname: euk2.com
 
