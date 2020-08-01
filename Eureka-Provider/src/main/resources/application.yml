@@ -1,13 +1,16 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://euk1.com:7001/eureka/
+      defaultZone: http://snail:123456@euk1.com:7001/eureka/
+    # 开启健康检查，可以实时上报服务的真实健康状态 up/down
+    healthcheck:
+      enabled: true
   instance:
     prefer-ip-address: true # 使用ip地址注册
-    instance-id: Eureka-provider # 指定服务的id
+    # instance-id: Eureka-provider # 指定服务的id，服务唯一，不指定默认 主机名:应用名:端口
 
 server:
-  port: 81
+  port: 82
 
 spring:
   application:
@@ -20,3 +23,10 @@ spring:
 #eureka.client.registry-fetch-interval-seconds=5
 #续约到期时间（默认90秒）
 #eureka.instance.lease-expiration-duration-in-seconds=60
+
+# actuator 开启所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

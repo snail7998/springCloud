@@ -11,17 +11,23 @@ package com.snail.eurekaserver.controller;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
+import com.snail.eurekaserver.entity.User;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletResponse;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author taozhi
@@ -37,6 +43,9 @@ public class ConsumerController {
 
   @Autowired
   LoadBalancerClient lb; // 注意也是一个 抽象接口，ribbon只是其一个实现
+
+  @Autowired
+  RestTemplate restTemplate;
 
   @GetMapping("/getServices")
   public void getServices(){
@@ -93,17 +102,75 @@ public class ConsumerController {
   /**
    * 使用 ribbon 实现远程调用
    */
-  @GetMapping("/myRPC")
-  public void myRPC(){
+  @GetMapping("/testRibbon")
+  public String testRibbon(){
     // ribbon 会自动帮我们剔除 status 是 down 的节点
+    // 默认轮询算法：区域轮询算法
     ServiceInstance instance = lb.choose("provider");
 
     String url =	"http://" + instance.getHost() +":"+ instance.getPort() + "/getHi";
     System.out.println("url:" + url);
-
     // 使用RestTemplate 替代 httpClient 调用服务
-    RestTemplate restTemplate = new RestTemplate();
-    String respStr = restTemplate.getForObject(url, String.class);
-    System.out.println("respStr ribbon ..."  + respStr);
+    return restTemplate.getForObject(url, String.class);
   }
+
+  /**
+   * 使用 ribbon + restTemplate 实现远程调用
+   * 需使用到 @LoadBalanced 注解
+   */
+  @GetMapping("/testRestTemplate")
+  public String testRestTemplate(){
+    String url =	"http://provider/getHi";
+    return restTemplate.getForObject(url, String.class);
+  }
+
+  /**
+   * 测试 RestTemplate
+   *
+   *  getForXxx 使用 GET 请求
+   *  postForXxx 使用 POST 请求
+   */
+
+  @GetMapping("/getUser")
+  public User getUser(){
+    String url =	"http://provider/getUser";
+    return restTemplate.getForObject(url, User.class);
+  }
+
+  @GetMapping("/getUserWithParm")
+  public User getUserWithParm(){
+
+    // 使用单个参数
+    // String url =	"http://provider/getUserWithParm?name={1}";
+    // return restTemplate.getForObject(url, User.class, "james");
+
+    // 使用map作为参数
+    Map<String, String> map = Collections.singletonMap("name", "curry");
+    String url =	"http://provider/getUserWithParm?name={name}"; // 必须和map的key一致
+
+    return restTemplate.getForObject(url, User.class, map);
+  }
+
+  @GetMapping("/postUsers")
+  public User postUsers(){
+    String url ="http://provider/postParam";
+    Map<String, String> map = Collections.singletonMap("name", "tomphson");
+    ResponseEntity<User> entity = restTemplate.postForEntity(url, map, User.class);
+    System.out.println("entity : " + entity);
+    return null;
+  }
+
+  /**
+   * 使用  postForLocation
+   * @param resp
+   * @throws Exception
+   */
+  @GetMapping("/postLocation")
+  public void psotLocation(HttpServletResponse resp) throws Exception {
+    String url = "http://provider/postLocation";
+    Map<String, String> map = Collections.singletonMap("name", "curry");
+    URI location = restTemplate.postForLocation(url, map, User.class);
+    resp.sendRedirect(location.toURL().toString());
+  }
+
 }

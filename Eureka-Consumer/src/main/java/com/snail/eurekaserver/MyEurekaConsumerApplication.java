@@ -11,6 +11,12 @@ package com.snail.eurekaserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
+
+import com.netflix.loadbalancer.IRule;
+import com.netflix.loadbalancer.RandomRule;
 
 /**
  * @author taozhi
@@ -21,4 +27,21 @@ public class MyEurekaConsumerApplication {
   public static void main(String[] args) {
     SpringApplication.run(MyEurekaConsumerApplication.class, args);
   }
+
+  @Bean
+  @LoadBalanced
+  public RestTemplate getRestTemplate() {
+    return new RestTemplate();
+  }
+
+  /**
+   * 通过代码切换负载均衡策略
+   * @return
+   */
+/*  @Bean
+  public IRule myRule() {
+    //return new RoundRobinRule();
+    return new RandomRule();
+    //return new RetryRule();
+  }*/
 }

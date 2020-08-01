@@ -9,9 +9,18 @@ eureka:
     metadata-map:
     # 自定义元数据,可后期用户个性化使用
       snailKey: snailValue
+  server:
+    # 关闭自我保护机制，一般线上使用开启，超过85%开启
+    enable-self-preservation: false
 spring:
   profiles:
     active: euk1
   # 应用名称，搭建Server集群，需保证每个节点一致，等同于appName
   application:
     name: EurekaServer
+
+ # springboot security 开启
+  security:
+    user:
+      name: snail
+      password: 123456

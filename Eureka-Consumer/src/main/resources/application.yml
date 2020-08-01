@@ -1,7 +1,7 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://euk1.com:7001/eureka/
+      defaultZone: http://snail:123456@euk1.com:7001/eureka/
   instance:
     prefer-ip-address: true # 使用ip地址注册
     instance-id: Eureka-consumer # 指定服务的id
@@ -12,4 +12,10 @@ server:
 spring:
   application:
     name: consumer
+
+# client 提供方的应用名
+provider:
+  ribbon:
+   # 配置自定义负载均衡策略，配置优先于代码
+   NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
 
