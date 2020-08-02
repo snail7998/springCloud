@@ -11,8 +11,6 @@ package com.snail.feignprovider.controller;
 
 import com.snail.userapi.Person;
 import com.snail.userapi.UserApi;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -21,19 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FeignProviderController implements UserApi {
 
-  @GetMapping("/alive")
   @Override
   public String alive(){
     return "ok";
   }
 
-  @GetMapping("/getById")
   @Override
   public String getById(Integer id) {
     return "provider：" + id;
   }
 
-  @PostMapping("/postPserson")
   @Override
   public Person postPserson(Person person) {
     System.out.println(person);

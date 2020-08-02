@@ -8,3 +8,8 @@ server:
 spring:
   application:
     name: feign-consumer
+
+# feign 使用 hystrix 需手动开启
+feign:
+  hystrix:
+    enabled: true
