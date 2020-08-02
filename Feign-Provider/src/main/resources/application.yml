@@ -1,0 +1,10 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://snail:123456@euk1.com:7001/eureka/
+server:
+  port: 81
+
+spring:
+  application:
+    name: feign-provider
