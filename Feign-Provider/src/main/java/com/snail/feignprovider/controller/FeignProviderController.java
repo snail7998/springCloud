@@ -21,6 +21,7 @@ public class FeignProviderController implements UserApi {
 
   @Override
   public String alive(){
+    int i = 1/0;
     return "ok";
   }
 

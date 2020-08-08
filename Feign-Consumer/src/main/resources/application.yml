@@ -2,6 +2,9 @@ eureka:
   client:
     service-url:
       defaultZone: http://snail:123456@euk1.com:7001/eureka/
+      # 打开 Actuator 健康检查
+    healthcheck:
+      enabled: true
 server:
   port: 82
 
@@ -13,3 +16,18 @@ spring:
 feign:
   hystrix:
     enabled: true
+# 开启面板监控，需打开所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+# 开启信号量隔离，就不使用 线程池隔离了
+# hystrix.command.default.execution.isolation.strategy=SEMAPHORE
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+

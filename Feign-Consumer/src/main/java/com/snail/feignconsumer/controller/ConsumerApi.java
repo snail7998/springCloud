@@ -19,6 +19,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 // @FeignClient(name = "xxoo", url = "http://localhost:81") 不走Eureka 的形式，用url属性指定服务器列表
 // @FeignClient(name = "feign-provider") // 结合Eureka，name是服务提供方的 application name
 // @FeignClient(name = "feign-provider", fallback = FeignProviderBackTest.class) // feign 整合 Hystrix
-@FeignClient(name = "feign-provider", fallback = FeignProviderBackFactoryTest.class) // feign 整合 Hystrix，使用FallBackFactory
+@FeignClient(name = "feign-provider", fallbackFactory = FeignProviderBackFactoryTest.class) // feign 整合 Hystrix，使用FallBackFactory
 public interface ConsumerApi extends UserApi {
 }

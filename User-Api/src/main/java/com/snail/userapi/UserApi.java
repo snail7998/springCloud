@@ -13,7 +13,7 @@ public interface UserApi {
 	 * 查看当前服务状态~~~
 	 * @return (* ￣3)(ε￣ *)
 	 */
-	@GetMapping("/alive")
+	@GetMapping("/User/alive")
 	public String alive();
 
 	/**
@@ -21,9 +21,9 @@ public interface UserApi {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/getById")
+	@GetMapping("/User/getById")
 	public String getById(@RequestParam("id")Integer id);
 
-	@PostMapping("/postPserson")
+	@PostMapping("/User/postPserson")
 	public Person postPserson(@RequestBody Person person);
 }
