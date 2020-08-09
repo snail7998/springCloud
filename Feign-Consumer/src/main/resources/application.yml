@@ -6,22 +6,38 @@ eureka:
     healthcheck:
       enabled: true
 server:
-  port: 82
+  port: 92
 
 spring:
   application:
     name: feign-consumer
+  #zipkin
+  zipkin:
+    base-url: http://localhost:9411/
+    #采样比例1
+  sleuth:
+    sampler:
+      rate: 1
+  # 链接 springCloud admin 地址
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080
 
 # feign 使用 hystrix 需手动开启
 feign:
   hystrix:
     enabled: true
 # 开启面板监控，需打开所有端点
+# springCloud admin 配置
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
 # 开启信号量隔离，就不使用 线程池隔离了
 # hystrix.command.default.execution.isolation.strategy=SEMAPHORE
 hystrix:
@@ -30,4 +46,5 @@ hystrix:
       execution:
         isolation:
           strategy: SEMAPHORE
+
 

@@ -1,0 +1,62 @@
+#################################### common config : ####################################
+spring:
+  application:
+    name: admin-test
+  # 邮件设置
+  mail:
+    host: smtp.qq.com
+    username: 2284566583 # 注意须和 发件邮箱 对上
+    password: xxxxxxx授权码 # 需要去qq邮箱官网打开 smtp/pop3 开关，会让你核对身份返回个授权码
+    properties:
+      mail:
+        smpt:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  boot:
+    admin:
+      notify:
+        mail:
+          #收件邮箱
+          to: taozhi7998@sina.cn
+          # 发件邮箱
+          from: 2284566583@qq.com
+
+server:
+  port: 8080
+
+## ActuatorWeb访问端口
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+#
+## spring cloud access&secret config
+## 可以访问如下地址查看: https://usercenter.console.aliyun.com/#/manage/ak
+#spring.cloud.alicloud.access-key=****
+#spring.cloud.alicloud.secret-key=****
+#
+#
+#  # 邮件设置
+#spring.mail.host=smtp.qq.com
+#spring.mail.username=85586429
+#spring.mail.password=nyokkxzytcjwbgbh
+#spring.mail.properties.mail.smpt.auth=true
+#spring.mail.properties.mail.smpt.starttls.enable=true
+#spring.mail.properties.mail.smpt.starttls.required=true
+#
+#
+##收件邮箱
+#spring.boot.admin.notify.mail.to=85586429@qq.com
+## 发件邮箱
+#spring.boot.admin.notify.mail.from=85586429@qq.com
+

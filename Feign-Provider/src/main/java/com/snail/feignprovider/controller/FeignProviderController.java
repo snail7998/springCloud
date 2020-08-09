@@ -11,6 +11,7 @@ package com.snail.feignprovider.controller;
 
 import com.snail.userapi.Person;
 import com.snail.userapi.UserApi;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,10 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FeignProviderController implements UserApi {
 
+  @Value("${server.port}")
+  String port;
+
   @Override
   public String alive(){
-    int i = 1/0;
-    return "ok";
+    // int i = 1/0;
+    return "ok" + port;
   }
 
   @Override
